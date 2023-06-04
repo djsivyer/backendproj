@@ -5,8 +5,7 @@ from django.views import generic
 # Create your views here.
 
 def index(request):
-    template = loader.get_template('finapp/index.html')
-    return HttpResponse(template.render(request))
+    return render(request, 'index.html')
 
 def login_view(request):
     if request.method == 'POST':
