@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from djanog.template import loader
+from django.template import loader
 from django.views import generic
 # Create your views here.
 
