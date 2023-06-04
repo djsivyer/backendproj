@@ -8,4 +8,4 @@ def index_view(request):
     return render(request, 'finapp/index.html')
 
 def login_view(request):
-    return render(request, 'finapp/login.html')
+    return render(request, 'finapp/logon.html')
