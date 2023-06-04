@@ -11,3 +11,6 @@ def login_view(request):
         # Implement your login logic here
 
     return render(request, 'login.html')
+
+def index_view(request):
+    return render(request, 'index.html')
