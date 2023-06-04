@@ -6,7 +6,7 @@ from django.views import generic
 
 def index(request):
     template = loader.get_template('index.html')
-    return HttpResponse(template.render())
+    return HttpResponse(template.render(request))
 
 def login_view(request):
     if request.method == 'POST':
