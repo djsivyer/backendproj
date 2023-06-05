@@ -7,5 +7,5 @@ from django.views import generic
 def index_view(request):
     return render(request, 'finapp/index.html')
 
-def logon_view(request):
-    return render(request, 'finapp/logon.html')
+def login_view(request):
+    return render(request, 'finapp/login.html')
