@@ -9,3 +9,6 @@ def index_view(request):
 
 def login_view(request):
     return render(request, 'finapp/login.html')
+
+def register_view(request):
+    return render(request, 'finapp/register.html')
