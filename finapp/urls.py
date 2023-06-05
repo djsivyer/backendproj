@@ -1,9 +1,9 @@
-from django.urls import path, include
+from django.urls import path
 
 from . import views
 
 app_name = "finapp"
 urlpatterns = [
     path("", views.index_view, name="index"),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("logon/", views.logon_view, name="logon"),
 ]
