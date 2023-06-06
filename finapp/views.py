@@ -18,7 +18,7 @@ def register_view(request):
     if request.method == 'GET':
         form = RegisterForm()
         context = {'form': form}
-        return render(request, 'register.html', context)
+        return render(request, 'finapp/register.html', context)
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
