@@ -26,7 +26,7 @@ def register_view(request):
             form.save()
             user = form.cleaned_data.get('username')
             messages.success(request, 'Account was created for ' + user)
-            return redirect('home_page')
+            return redirect('finapp/homepage.html')
         else:
             print('Form is not valid')
             messages.error(request, 'Error Processing Your Request')
@@ -42,6 +42,6 @@ def login(request):
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
-        return redirect('homepage')
+        return redirect('finapp/homepage.html')
     else:
           messages.error(request, "Unsuccessful login. Invalid information.")
