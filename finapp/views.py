@@ -1,7 +1,7 @@
 #from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import NewUserForm
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 #from django.template import loader
 #from django.views import generic
@@ -23,7 +23,17 @@ def register_request(request):
 			user = form.save()
 			login(request, user)
 			messages.success(request, "Registration successful." )
-			return redirect("finapp:homepage")
+			return redirect('homepage')
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
 	return render (request=request, template_name="finapp/register.html", context={"register_form":form})
+
+def login(request):
+    username = request.POST["username"]
+    password = request.POST["password"]
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return redirect('homepage')
+    else:
+          messages.error(request, "Unsuccessful login. Invalid information.")
