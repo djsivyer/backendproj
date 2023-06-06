@@ -13,6 +13,8 @@ def index_view(request):
 def login_view(request):
     if request.method == 'GET':
     	return render(request, 'finapp/login.html')
+    if request.method == 'POST':
+        return redirect('homepage')
 
 def register_view(request):
     if request.method == 'GET':
