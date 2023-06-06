@@ -53,7 +53,7 @@
             {% endif %}
 
                 <label>Password <span class="text-danger">*</span></label>
-
+                {{ form.password1 }}
             {% if form.password1.errors %}
                 {% for error in form.password1.errors %}
 
