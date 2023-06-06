@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 #from django.template import loader
 #from django.views import generic
+
 # Create your views here.
 
 def index_view(request):
@@ -12,7 +13,16 @@ def index_view(request):
 
 def login_view(request):
     if request.method == 'GET':
-    	return render(request, 'finapp/login.html')
+        return render(request, 'finapp/login.html')
+    if request.method == 'POST':
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('finapp:homepage.html')
+        else:
+            messages.error(request, "Unsuccessful login. Invalid information.")
 
 def register_view(request):
     if request.method == 'GET':
@@ -34,14 +44,3 @@ def register_view(request):
         return render(request, 'finapp/register.html', context)
 
     return render(request, 'finapp/register.html', {})
-
-
-def login(request):
-    username = request.POST["username"]
-    password = request.POST["password"]
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect('finapp:homepage.html')
-    else:
-          messages.error(request, "Unsuccessful login. Invalid information.")
