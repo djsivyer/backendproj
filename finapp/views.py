@@ -28,7 +28,7 @@ def register_view(request):
             return redirect('homepage')
         messages.error(request, "Unsuccessful registration. Invalid information.")
         form = NewUserForm()
-    return render (request=request, template_name="finapp/register.html", context={"register_form":form})
+    return render (request, 'finapp/login.html')
 
 def login(request):
     username = request.POST["username"]
