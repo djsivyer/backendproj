@@ -105,21 +105,6 @@
             {% endif %}
         </div>
         <div class="col-md-12">
-            <div class="form-group">
-                <div class="custom-control">
-                    {{ form.check }}
-                    <label>I Accept <a href="{% url 'terms' %}" class="text-primary">Terms And Condition</a></label>
-                </div>
-                {% if form.check.errors %}
-                    {% for error in form.check.errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-        <div class="col-md-12">
             <button class="btn btn-primary w-100" type="submit">Register</button>
         </div>
         <div class="mx-auto">
