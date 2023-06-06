@@ -1,6 +1,6 @@
 #from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from .forms import NewUserForm
+from .forms import RegisterForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 #from django.template import loader
@@ -13,22 +13,28 @@ def index_view(request):
 def login_view(request):
     if request.method == 'GET':
     	return render(request, 'finapp/login.html')
-    if request.method == 'POST':
-        return redirect('homepage')
 
 def register_view(request):
     if request.method == 'GET':
-          return render(request, 'finapp/register.html')
-    if request.method == "POST":
-        form = NewUserForm(request.POST)
+        form = RegisterForm()
+        context = {'form': form}
+        return render(request, 'register.html', context)
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, "Registration successful." )
-            return redirect('homepage')
-        messages.error(request, "Unsuccessful registration. Invalid information.")
-        form = NewUserForm()
-    return render (request, 'finapp/login.html')
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, 'Account was created for ' + user)
+            return redirect('home_page')
+        else:
+            print('Form is not valid')
+            messages.error(request, 'Error Processing Your Request')
+        context = {'form': form}
+        return render(request, 'register.html', context)
+
+    return render(request, 'register.html', {})
+
 
 def login(request):
     username = request.POST["username"]
