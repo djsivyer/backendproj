@@ -16,6 +16,9 @@ def login_view(request):
 def register_view(request):
     return render(request, 'finapp/register.html')
 
+def homepage_view(request):
+      return render(request, 'finapp/homepage.html')
+
 def register_request(request):
 	if request.method == "POST":
 		form = NewUserForm(request.POST)
