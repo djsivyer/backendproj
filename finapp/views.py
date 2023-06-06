@@ -31,9 +31,9 @@ def register_view(request):
             print('Form is not valid')
             messages.error(request, 'Error Processing Your Request')
         context = {'form': form}
-        return render(request, 'register.html', context)
+        return render(request, 'finapp/register.html', context)
 
-    return render(request, 'register.html', {})
+    return render(request, 'finapp/register.html', {})
 
 
 def login(request):
