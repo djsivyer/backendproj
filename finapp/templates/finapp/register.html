@@ -76,6 +76,25 @@
             {% endif %}
             <button class="btn btn-primary w-100" type="submit">Register</button>
         </form>
+        <div class="row">
+            <div class="col-md-12">
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                                <strong>{{ field|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-md-6">
     </div>
     </body>
     </html>
