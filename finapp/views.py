@@ -11,22 +11,22 @@ def index_view(request):
     return render(request, 'finapp/index.html')
 
 def login_view(request):
-    return render(request, 'finapp/login.html')
+    if request.method == 'GET':
+    	return render(request, 'finapp/login.html')
 
 def register_view(request):
-    return render(request, 'finapp/register.html')
-
-def register_request(request):
-	if request.method == "POST":
-		form = NewUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			login(request, user)
-			messages.success(request, "Registration successful." )
-			return redirect('homepage')
-		messages.error(request, "Unsuccessful registration. Invalid information.")
-	form = NewUserForm()
-	return render (request=request, template_name="finapp/register.html", context={"register_form":form})
+    if request.method == 'GET':
+          return render(request, 'finapp/register.html')
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful." )
+            return redirect('homepage')
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+        form = NewUserForm()
+    return render (request=request, template_name="finapp/register.html", context={"register_form":form})
 
 def login(request):
     username = request.POST["username"]
