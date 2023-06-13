@@ -13,6 +13,7 @@ def index_view(request):
 
 def login_view(request):
     if request.method == 'GET':
+        # Add session check to see if logged in already, if so login
         return render(request, 'finapp/login.html')
     if request.method == 'POST':
         username = request.POST["username"]
@@ -42,5 +43,3 @@ def register_view(request):
             messages.error(request, 'Error Processing Your Request')
         context = {'form': form}
         return render(request, 'finapp/register.html', context)
-
-    return render(request, 'finapp/register.html', {})

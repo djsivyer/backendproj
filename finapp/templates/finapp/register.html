@@ -76,8 +76,7 @@
             {% endif %}
             <button class="btn btn-primary w-100" type="submit">Register</button>
         </form>
-        <div class="row">
-            <div class="col-md-12">
+            <div class="ErrorBox">
                 {% if form.errors %}
                     {% for field in form %}
                         {% for error in field.errors %}
@@ -94,7 +93,6 @@
                     {% endfor %}
                 {% endif %}
             </div>
-            <div class="col-md-6">
     </div>
     </body>
     </html>
