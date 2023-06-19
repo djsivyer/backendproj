@@ -18,8 +18,9 @@ def home_view(request):
         return redirect('finapp:index')
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('finapp:homepage')
     if request.method == 'GET':
-        # Add session check to see if logged in already, if so login
         return render(request, 'finapp/login.html')
     if request.method == 'POST':
         username = request.POST["username"]
@@ -30,6 +31,7 @@ def login_view(request):
             return redirect('finapp:homepage')
         else:
             messages.error(request, "Unsuccessful login. Invalid information.")
+            return redirect('finapp:login')
 
 def register_view(request):
     if request.user.is_authenticated:
