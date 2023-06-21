@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance App - Home</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'finapp/style.css' %}">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="{% url 'finapp:homepage' %}">Home</a></li>
+        <li><a href="#">Budgets</a></li>
+        <li><a href="#">Reports</a></li>
+        <li><a href="{% url 'finapp:logout' %}">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section class='content'>
+    {% if user_transactions %}
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Vendor</th>
+            <th>Amount</th>
+        </tr>
+        {% for transaction in user_transactions %}
+        <tr>
+            <td>{{ transaction.date }}</td>
+            <td>{{ transaction.time }}</td>
+            <td>{{ transaction.vendor }}</td>
+            <td>{{ transaction.amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Currently no transations imported</p>
+    {% endif %}
+    <button type="submit" class="upload-btn">Upload</button>
+  </section>
+</body>
+</html>
