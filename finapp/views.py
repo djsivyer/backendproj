@@ -4,6 +4,7 @@ from .forms import RegisterForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .models import Transactions
+from django.db.models import Sum
 #from django.views import generic
 
 # Create your views here.
@@ -50,11 +51,15 @@ def login_view(request):
 
 def home_view(request):
     if request.user.is_authenticated:
-        return render(request, 'finapp/homepage.html')
+        user_balance = Transactions.user.aggregate(Sum('amount'))
+        context = {"user_balance" : user_balance}
+        return render(request, 'finapp/homepage.html', context)
     else:
         return redirect('finapp:index')
 
 def transactions_view(request):
+    if request.method == 'POST':
+        upload = Transactions(request.POST)
     if request.user.is_authenticated:
         user_transactions = Transactions.user
         context = {"user_transactions" : user_transactions}
