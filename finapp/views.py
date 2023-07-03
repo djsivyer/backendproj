@@ -51,9 +51,8 @@ def login_view(request):
 
 def home_view(request):
     if request.user.is_authenticated:
-        user_balance = Transactions.user.aggregate(Sum('amount'))
-        context = {"user_balance" : user_balance}
-        return render(request, 'finapp/homepage.html', context)
+        ##context = {"user_balance" : user_balance}
+        return render(request, 'finapp/homepage.html')
     else:
         return redirect('finapp:index')
 
@@ -61,7 +60,7 @@ def transactions_view(request):
     if request.method == 'POST':
         upload = Transactions(request.POST)
     if request.user.is_authenticated:
-        user_transactions = Transactions.user
+        user_transactions = Transactions
         context = {"user_transactions" : user_transactions}
         return render(request, 'finapp/transactions.html', context)
     else:
