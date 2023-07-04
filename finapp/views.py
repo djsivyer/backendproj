@@ -60,7 +60,7 @@ def transactions_view(request):
     if request.method == 'POST':
         upload = Transactions(request.POST)
     if request.user.is_authenticated:
-        user_transactions = Transactions
+        user_transactions = Transactions.objects.all()
         context = {"user_transactions" : user_transactions}
         return render(request, 'finapp/transactions.html', context)
     else:
