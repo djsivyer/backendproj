@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+class TransactionsSum(models.Model):
+    def transactionsSum(self, user):
+        amountSum = Transactions.user
+        return amountSum
+    
 class Transactions(models.Model):
     #Column as required for a transaction history + associated to specific user
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -15,8 +21,3 @@ class Transactions(models.Model):
 
     def __str__(self):
         return self.user
-
-class TransactionsSum(models.Model):
-    def transactionsSum(self, user):
-        amountSum = Transactions.user
-        return amountSum
