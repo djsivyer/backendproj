@@ -1,11 +1,8 @@
-#from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from .forms import RegisterForm
+from finapp.forms import RegisterForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .models import Transactions
-from django.db.models import Sum
-#from django.views import generic
+from finapp.models import *
 
 # Create your views here.
 
@@ -51,8 +48,9 @@ def login_view(request):
 
 def home_view(request):
     if request.user.is_authenticated:
-        ##context = {"user_balance" : user_balance}
-        return render(request, 'finapp/homepage.html')
+        user_balance = TransactionsByUser.transactionsSum(request.user)
+        context = {"user_balance" : user_balance}
+        return render(request, 'finapp/homepage.html', context)
     else:
         return redirect('finapp:index')
 
@@ -60,9 +58,8 @@ def transactions_view(request):
     if request.method == 'POST':
         upload = Transactions(request.POST)
     if request.user.is_authenticated:
-        user_transactions = Transactions.objects.all()
-        context = {"user_transactions" : user_transactions}
-        return render(request, 'finapp/transactions.html', context)
+        user_transactions = TransactionsByUser.userTransactions(request.user)
+        return render(request, 'finapp/transactions.html', {'user_transactions' : user_transactions})
     else:
         return redirect('finapp:index')
 

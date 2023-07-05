@@ -17,9 +17,12 @@
         <li><a href="#">Reports</a></li>
         <li><a href="{% url 'finapp:logout' %}">Logout</a></li>
       </ul>
+      <p>User: {{ user.username }}</p>
     </nav>
   </header>
 <section class="content">
+  <h3>Current Balance</h3>
+  <p>Transactions Sum: {{ user_balance }}</p>
 </section>
 </body>
 </html>
