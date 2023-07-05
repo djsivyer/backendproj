@@ -56,6 +56,8 @@ def home_view(request):
         return redirect('finapp:index')
 
 def transactions_view(request):
+    #need to add checks for duplicate data
+    #Should probably move it into a function of upload so its not within the view?
     if request.method == 'POST' and request.FILES.get('csv_file'):
         csv_file = request.FILES['csv_file']
         
