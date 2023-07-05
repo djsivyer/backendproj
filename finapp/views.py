@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from finapp.forms import RegisterForm
-from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from finapp.forms import RegisterForm
 from finapp.models import *
+import csv
 
 # Create your views here.
 
@@ -55,8 +56,45 @@ def home_view(request):
         return redirect('finapp:index')
 
 def transactions_view(request):
-    if request.method == 'POST':
-        upload = Transactions(request.POST)
+    if request.method == 'POST' and request.FILES.get('csv_file'):
+        csv_file = request.FILES['csv_file']
+        
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request, 'Invalid file format. Please upload a CSV file.')
+        
+        else:
+            # Read the CSV file
+            decoded_file = csv_file.read().decode('utf-8').splitlines()
+            reader = csv.reader(decoded_file)
+            
+            # Check if the file has headers
+            if not csv.Sniffer().has_header(decoded_file[0]):
+                messages.error(request, 'CSV file is missing headers.')
+                return render(request, 'transactions.html')
+            
+            # Verify the header row
+            header_row = next(reader)
+            expected_headers = ['date', 'time', 'vendor', 'amount']
+            
+            if header_row != expected_headers:
+                messages.error(request, 'Incorrect CSV header format.')
+                return render(request, 'transactions.html')
+            
+            # Process the data rows
+            for row in reader:
+                date = row[0]
+                time = row[1]
+                vendor = row[2]
+                amount = row[3]
+                
+                # Assuming the logged-in user's transactions model has fields: date, time, vendor, amount
+                transaction = Transactions(user=request.user, date=date, time=time, vendor=vendor, amount=amount)
+                transaction.save()
+                
+            messages.success(request, 'Transactions uploaded successfully.')
+        user_transactions = TransactionsByUser.userTransactions(request.user)
+        return render(request, 'finapp/transactions.html', {'user_transactions' : user_transactions})
+
     if request.user.is_authenticated:
         user_transactions = TransactionsByUser.userTransactions(request.user)
         return render(request, 'finapp/transactions.html', {'user_transactions' : user_transactions})

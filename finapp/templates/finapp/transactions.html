@@ -42,9 +42,10 @@
     {% endif %}
   </section>
   <section>
-    <form action="">
-      <input type="file" id="uploadFile" name="transactionUpload">
-      <input type="submit">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="csv_file">
+      <button type="submit" value="Upload">Submit</button>
   </section>
 </body>
 </html>
